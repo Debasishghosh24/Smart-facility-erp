@@ -43,3 +43,5 @@ export const siteSchema = z.object({
 
     status: z.enum(["Active", "Inactive"]),
 })
+
+export type SiteFormData = z.infer<typeof siteSchema>;

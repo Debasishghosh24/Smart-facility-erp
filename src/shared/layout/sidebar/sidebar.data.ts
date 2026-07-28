@@ -6,6 +6,7 @@ import {
   IconReportAnalytics,
   IconSettings,
   IconBriefcase,
+  IconMapPin,
 } from "@tabler/icons-react"
 
 import type { SidebarItem } from "./sidebar.types"
@@ -28,6 +29,12 @@ export const sidebarItems: SidebarItem[] = [
         title: "Department",
         icon: IconBriefcase,
         path: "/department",
+      },
+      {
+        id: "site",
+        title: "Site",
+        icon: IconMapPin,
+        path: "/site",
       },
     ],
   },

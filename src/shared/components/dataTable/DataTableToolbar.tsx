@@ -19,22 +19,21 @@ interface DataTableToolbarProps<TData> {
 export function DataTableToolbar<TData>({
     table,
 }: DataTableToolbarProps<TData>) {
+    const searchColumn = table.getColumn("siteName") ?? table.getColumn("name");
+    const searchPlaceholder = table.getColumn("siteName")
+        ? "Search site by name or code..."
+        : "Search department by name or code...";
+
     return (
         <div className="mb-4 flex flex-wrap items-end justify-between gap-4 p-1">
             {/* Search Input Container */}
             <div className="relative flex-1 min-w-[280px] max-w-md">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                 <Input
-                    placeholder="Search department by name or code..."
-                    value={
-                        (table
-                            .getColumn("name")
-                            ?.getFilterValue() as string) ?? ""
-                    }
+                    placeholder={searchPlaceholder}
+                    value={(searchColumn?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
-                        table
-                            .getColumn("name")
-                            ?.setFilterValue(event.target.value)
+                        searchColumn?.setFilterValue(event.target.value)
                     }
                     className="pl-10 pr-12 w-full bg-white border-slate-200"
                 />
@@ -74,7 +73,7 @@ export function DataTableToolbar<TData>({
                 <div className="flex flex-col gap-1.5">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Sort By</span>
                     <Select
-                        value={(table.getState().sorting[0]?.id) || "name"}
+                        value={(table.getState().sorting[0]?.id) || (table.getColumn("siteName") ? "siteName" : "name")}
                         onValueChange={(value) => {
                             const isDesc = table.getState().sorting[0]?.desc;
                             table.setSorting([{ id: value, desc: isDesc ?? false }]);
@@ -85,9 +84,19 @@ export function DataTableToolbar<TData>({
                         </SelectTrigger>
 
                         <SelectContent>
-                            <SelectItem value="name">Department Name</SelectItem>
-                            <SelectItem value="shortCode">Short Code</SelectItem>
-                            <SelectItem value="createdAt">Created At</SelectItem>
+                            {table.getColumn("siteName") ? (
+                                <>
+                                    <SelectItem value="siteName">Site Name</SelectItem>
+                                    <SelectItem value="siteCode">Site Code</SelectItem>
+                                    <SelectItem value="createdAt">Created At</SelectItem>
+                                </>
+                            ) : (
+                                <>
+                                    <SelectItem value="name">Department Name</SelectItem>
+                                    <SelectItem value="shortCode">Short Code</SelectItem>
+                                    <SelectItem value="createdAt">Created At</SelectItem>
+                                </>
+                            )}
                         </SelectContent>
                     </Select>
                 </div>

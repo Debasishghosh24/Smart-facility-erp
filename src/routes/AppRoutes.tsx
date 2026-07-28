@@ -8,6 +8,9 @@ import Login from "@/modules/auth/pages/Login"
 import DepartmentList from "@/modules/masters/department/pages/DepartmentList"
 import DepartmentAdd from "@/modules/masters/department/pages/DepartmentAdd"
 import DepartmentEdit from "@/modules/masters/department/pages/DepartmentEdit"
+import SiteEdit from "@/modules/masters/site/pages/SiteEdit"
+import SiteAdd from "@/modules/masters/site/pages/SiteAdd"
+import SiteList from "@/modules/masters/site/pages/SiteList"
 
 export default function AppRoutes() {
   return (
@@ -35,7 +38,21 @@ export default function AppRoutes() {
             path="/department/edit/:id"
             element={<DepartmentEdit />}
           />
+
+          <Route
+            path="/site"
+            element={<SiteList />}
+          />
+          <Route
+            path="/site/add"
+            element={<SiteAdd />}
+          />
+          <Route
+            path="/site/edit/:id"
+            element={<SiteEdit />}
+          />
         </Route>
+
 
       </Routes>
     </BrowserRouter>
