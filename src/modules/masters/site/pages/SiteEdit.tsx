@@ -1,6 +1,8 @@
 import { useMemo } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { toast } from "sonner";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/component/ui/button";
 
 import { SiteForm } from "../components/SiteForm";
 import { mockSites } from "../mock/site.mock";
@@ -17,10 +19,8 @@ export default function SiteEdit() {
 
     const handleSubmit = (data: SiteFormData) => {
         console.log("Updated Site:", data);
-
         toast.success("Site updated successfully.");
-
-        navigate("/masters/site");
+        navigate("/site");
     };
 
     if (!site) {
@@ -39,15 +39,33 @@ export default function SiteEdit() {
 
     return (
         <div className="space-y-6">
-            {/* Page Header */}
-            <div>
-                <h1 className="text-2xl font-bold tracking-tight">
-                    Edit Site
-                </h1>
+            {/* Breadcrumbs & Page Header Row */}
+            <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+                <div>
+                    {/* Breadcrumbs */}
+                    <div className="flex items-center gap-1.5 text-xs font-medium text-slate-400 mb-1">
+                        <span>Masters</span>
+                        <span>&gt;</span>
+                        <span>Site</span>
+                        <span>&gt;</span>
+                        <span className="text-slate-600 font-semibold">Edit Site</span>
+                    </div>
 
-                <p className="text-muted-foreground">
-                    Update site information.
-                </p>
+                    <h1 className="text-2xl font-bold tracking-tight text-slate-800">
+                        Edit Site
+                    </h1>
+
+                    <p className="text-sm text-slate-500">
+                        Update site information.
+                    </p>
+                </div>
+
+                <Link to="/site">
+                    <Button variant="outline" className="border-slate-200 text-slate-700 bg-white hover:bg-slate-50">
+                        <ArrowLeft className="mr-2 h-4 w-4 text-slate-500" />
+                        Back to Sites
+                    </Button>
+                </Link>
             </div>
 
             {/* Form */}
@@ -62,10 +80,12 @@ export default function SiteEdit() {
                     address: site.address,
                     city: site.city,
                     state: site.state,
+                    pincode: site.pincode,
                     status: site.status,
                 }}
                 submitLabel="Update Site"
                 onSubmit={handleSubmit}
+                onCancel={() => navigate("/site")}
             />
         </div>
     );
