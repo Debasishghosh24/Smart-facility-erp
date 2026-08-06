@@ -11,6 +11,9 @@ import DepartmentEdit from "@/modules/masters/department/pages/DepartmentEdit"
 import SiteEdit from "@/modules/masters/site/pages/SiteEdit"
 import SiteAdd from "@/modules/masters/site/pages/SiteAdd"
 import SiteList from "@/modules/masters/site/pages/SiteList"
+import EmployeeList from "@/modules/masters/employee/pages/EmployeeLIst"
+import EmployeeAdd from "@/modules/masters/employee/pages/EmployeeAdd"
+import EmployeeEdit from "@/modules/masters/employee/pages/EmployeeEdit"
 
 export default function AppRoutes() {
   return (
@@ -50,6 +53,21 @@ export default function AppRoutes() {
           <Route
             path="/site/edit/:id"
             element={<SiteEdit />}
+          />
+
+          <Route
+            path="/employee"
+            element={<EmployeeList />}
+          />
+
+          <Route
+            path="/employee/add"
+            element={<EmployeeAdd />}
+          />
+
+          <Route
+            path="/employee/edit/:id"
+            element={<EmployeeEdit />}
           />
         </Route>
 

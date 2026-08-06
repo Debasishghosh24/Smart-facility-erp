@@ -1,0 +1,76 @@
+import { useMemo } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
+
+import EmployeeForm from "../components/EmployeeForm";
+
+import { mockEmployees } from "../mock/employee.mock";
+
+import type { EmployeeFormData } from "../validation/employee.schema";
+
+export default function EmployeeEdit() {
+    const { id } = useParams();
+
+    const navigate = useNavigate();
+
+    const employee = useMemo(
+        () => mockEmployees.find((item) => item.id === id),
+        [id]
+    );
+
+    const handleSubmit = (data: EmployeeFormData) => {
+        console.log("Updated Employee:", data);
+
+        toast.success("Employee updated successfully.");
+
+        navigate("/employee");
+    };
+
+    if (!employee) {
+        return (
+            <div className="rounded-lg border border-red-300 bg-red-50 p-8">
+                <h2 className="text-xl font-semibold text-red-600">
+                    Employee Not Found
+                </h2>
+
+                <p className="mt-2 text-red-500">
+                    The employee you are looking for does not exist.
+                </p>
+            </div>
+        );
+    }
+
+    return (
+        <div className="space-y-6">
+            {/* Page Header */}
+            <div>
+                <h1 className="text-3xl font-bold tracking-tight">
+                    Edit Employee
+                </h1>
+
+                <p className="text-muted-foreground">
+                    Update employee information.
+                </p>
+            </div>
+
+            <EmployeeForm
+                defaultValues={{
+                    employeeId: employee.employeeId,
+                    firstName: employee.firstName,
+                    lastName: employee.lastName,
+                    department: employee.department,
+                    site: employee.site,
+                    designation: employee.designation,
+                    email: employee.email,
+                    contactNo: employee.contactNo,
+                    joiningDate: employee.joiningDate,
+                    employmentType: employee.employmentType,
+                    reportingManager: employee.reportingManager,
+                    status: employee.status === "Active",
+                }}
+                onSubmit={handleSubmit}
+                submitLabel="Update Employee"
+            />
+        </div>
+    );
+}
