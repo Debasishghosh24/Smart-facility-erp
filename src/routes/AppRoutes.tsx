@@ -14,6 +14,9 @@ import SiteList from "@/modules/masters/site/pages/SiteList"
 import EmployeeList from "@/modules/masters/employee/pages/EmployeeLIst"
 import EmployeeAdd from "@/modules/masters/employee/pages/EmployeeAdd"
 import EmployeeEdit from "@/modules/masters/employee/pages/EmployeeEdit"
+import VendorList from "@/modules/masters/vendor/pages/VendorList"
+import VendorAdd from "@/modules/masters/vendor/pages/VendorAdd"
+import VendorEdit from "@/modules/masters/vendor/pages/VendorEdit"
 
 export default function AppRoutes() {
   return (
@@ -68,6 +71,21 @@ export default function AppRoutes() {
           <Route
             path="/employee/edit/:id"
             element={<EmployeeEdit />}
+          />
+
+          <Route
+            path="/vendor"
+            element={<VendorList />}
+          />
+
+          <Route
+            path="/vendor/add"
+            element={<VendorAdd />}
+          />
+
+          <Route
+            path="/vendor/edit/:id"
+            element={<VendorEdit />}
           />
         </Route>
 

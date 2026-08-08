@@ -1,87 +1,64 @@
-import { recentMaintenances } from "../dashboard.mock"
+import { Calendar, User, Wrench } from "lucide-react";
+import { recentMaintenances } from "../dashboard.mock";
 
 export default function RecentMaintenance() {
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case "Completed":
+        return "bg-green-50 text-green-700 border-green-100/50";
+      case "Pending":
+        return "bg-amber-50 text-amber-700 border-amber-100/50";
+      default:
+        return "bg-blue-50 text-blue-700 border-blue-100/50";
+    }
+  };
+
   return (
-    <div className="rounded-2xl border bg-white p-6 shadow-sm">
-      <div className="mb-5 flex items-center justify-between">
-        <h2 className="text-lg font-semibold">
-          Recent Maintenance
-        </h2>
+    <div className="rounded-[20px] border border-slate-100 bg-white p-6 shadow-sm flex flex-col justify-between hover:shadow-lg hover:shadow-slate-200/40 transition-all duration-300">
+      <div>
+        <div className="mb-5 flex items-center justify-between">
+          <h2 className="text-base font-bold text-slate-800 tracking-tight">
+            Upcoming Maintenance
+          </h2>
+          <span className="rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-bold text-blue-600">
+            Active
+          </span>
+        </div>
 
-        <button className="rounded-lg bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700">
-          View All
-        </button>
-      </div>
-
-      <div className="overflow-x-auto">
-        <table className="w-full border-collapse">
-
-          <thead>
-            <tr className="border-b bg-slate-50">
-              <th className="px-4 py-3 text-left text-sm font-semibold">
-                Asset
-              </th>
-
-              <th className="px-4 py-3 text-left text-sm font-semibold">
-                Type
-              </th>
-
-              <th className="px-4 py-3 text-left text-sm font-semibold">
-                Engineer
-              </th>
-
-              <th className="px-4 py-3 text-left text-sm font-semibold">
-                Status
-              </th>
-
-              <th className="px-4 py-3 text-left text-sm font-semibold">
-                Date
-              </th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {recentMaintenances.map((item) => (
-              <tr
-                key={item.id}
-                className="border-b hover:bg-slate-50"
-              >
-                <td className="px-4 py-4">
-                  {item.asset}
-                </td>
-
-                <td className="px-4 py-4">
-                  {item.type}
-                </td>
-
-                <td className="px-4 py-4">
-                  {item.engineer}
-                </td>
-
-                <td className="px-4 py-4">
-                  <span
-                    className={`rounded-full px-3 py-1 text-xs font-medium
-                    ${
-                      item.status === "Completed"
-                        ? "bg-green-100 text-green-700"
-                        : item.status === "Pending"
-                        ? "bg-yellow-100 text-yellow-700"
-                        : "bg-blue-100 text-blue-700"
-                    }`}
-                  >
+        <div className="space-y-4">
+          {recentMaintenances.map((item) => (
+            <div key={item.id} className="group flex items-start gap-3 rounded-xl border border-slate-50 hover:border-slate-100 p-2.5 hover:bg-slate-50/50 transition-all duration-200">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600 border border-blue-100/30">
+                <Wrench size={16} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-1.5">
+                  <h4 className="text-xs font-bold text-slate-800 truncate tracking-wide">
+                    {item.asset}
+                  </h4>
+                  <span className={`rounded-md border px-1.5 py-0.5 text-[9px] font-bold tracking-wide ${getStatusBadge(item.status)}`}>
                     {item.status}
                   </span>
-                </td>
-
-                <td className="px-4 py-4 text-slate-500">
-                  {item.date}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-
-        </table>
+                </div>
+                <div className="flex items-center gap-3 mt-1.5 text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
+                  <span className="flex items-center gap-1">
+                    <User size={10} />
+                    {item.engineer.split(" ")[0]}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Calendar size={10} />
+                    {item.date.split(" ").slice(0,2).join(" ")}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
+
+      <button className="mt-5 w-full py-2 rounded-xl border border-slate-100 hover:border-slate-200 bg-slate-50/50 hover:bg-slate-50 text-xs font-bold text-slate-600 transition-all duration-200 active:scale-[0.98] cursor-pointer">
+        View Schedule
+      </button>
     </div>
-  )
+  );
 }

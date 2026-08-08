@@ -42,6 +42,12 @@ export const sidebarItems: SidebarItem[] = [
         icon: IconMapPin,
         path: "/employee",
       },
+      {
+        id: "vendor",
+        title: "Vendor",
+        icon: IconBuildingWarehouse,
+        path: "/vendor",
+      }
     ],
   },
 
