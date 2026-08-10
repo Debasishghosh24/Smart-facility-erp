@@ -19,12 +19,18 @@ interface DataTableToolbarProps<TData> {
 export function DataTableToolbar<TData>({
     table,
 }: DataTableToolbarProps<TData>) {
-    const searchColumn = table.getColumn("siteName") ?? table.getColumn("name") ?? table.getColumn("vendorName");
+    const searchColumn = table.getColumn("siteName") ?? table.getColumn("name") ?? table.getColumn("vendorName") ?? table.getColumn("categoryName") ?? table.getColumn("employeeId");
     const searchPlaceholder = table.getColumn("siteName")
-        ? "Search site by name or code..."
+        ? "Search site by name..."
         : table.getColumn("name")
-        ? "Search department by name or code..."
-        : "Search vendor by name or code...";
+        ? "Search department by name..."
+        : table.getColumn("vendorName")
+        ? "Search vendor by name..."
+        : table.getColumn("categoryName")
+        ? "Search category by name..."
+        : table.getColumn("employeeId")
+        ? "Search employee..."
+        : "Search...";
 
     return (
         <div className="mb-4 flex flex-wrap items-end justify-between gap-4 p-1">
@@ -81,6 +87,10 @@ export function DataTableToolbar<TData>({
                                 ? "siteName"
                                 : table.getColumn("name")
                                 ? "name"
+                                : table.getColumn("categoryName")
+                                ? "categoryName"
+                                : table.getColumn("employeeId")
+                                ? "employeeId"
                                 : "vendorName")
                         }
                         onValueChange={(value) => {
@@ -103,6 +113,18 @@ export function DataTableToolbar<TData>({
                                 <>
                                     <SelectItem value="name">Department Name</SelectItem>
                                     <SelectItem value="shortCode">Short Code</SelectItem>
+                                    <SelectItem value="createdAt">Created At</SelectItem>
+                                </>
+                            ) : table.getColumn("categoryName") ? (
+                                <>
+                                    <SelectItem value="categoryName">Category Name</SelectItem>
+                                    <SelectItem value="categoryCode">Category Code</SelectItem>
+                                    <SelectItem value="createdAt">Created At</SelectItem>
+                                </>
+                            ) : table.getColumn("employeeId") ? (
+                                <>
+                                    <SelectItem value="employeeId">Employee ID</SelectItem>
+                                    <SelectItem value="firstName">First Name</SelectItem>
                                     <SelectItem value="createdAt">Created At</SelectItem>
                                 </>
                             ) : (

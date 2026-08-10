@@ -17,6 +17,9 @@ import EmployeeEdit from "@/modules/masters/employee/pages/EmployeeEdit"
 import VendorList from "@/modules/masters/vendor/pages/VendorList"
 import VendorAdd from "@/modules/masters/vendor/pages/VendorAdd"
 import VendorEdit from "@/modules/masters/vendor/pages/VendorEdit"
+import AssetCategoryList from "@/modules/masters/assetCategory/pages/AssetCategoryList"
+import AssetCategoryAdd from "@/modules/masters/assetCategory/pages/AssetCategoryAdd"
+import AssetCategoryEdit from "@/modules/masters/assetCategory/pages/AssetCategoryEdit"
 
 export default function AppRoutes() {
   return (
@@ -86,6 +89,19 @@ export default function AppRoutes() {
           <Route
             path="/vendor/edit/:id"
             element={<VendorEdit />}
+          />
+
+          <Route
+            path="/asset-category"
+            element={<AssetCategoryList />}
+          />
+          <Route
+            path="/asset-category/add"
+            element={<AssetCategoryAdd />}
+          />
+          <Route
+            path="/asset-category/edit/:id"
+            element={<AssetCategoryEdit />}
           />
         </Route>
 

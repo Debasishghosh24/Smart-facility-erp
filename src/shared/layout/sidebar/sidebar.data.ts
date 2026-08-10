@@ -47,6 +47,12 @@ export const sidebarItems: SidebarItem[] = [
         title: "Vendor",
         icon: IconBuildingWarehouse,
         path: "/vendor",
+      },
+      {
+        id: "asset-category",
+        title: "Asset Category",
+        icon: IconBuildingWarehouse,
+        path: "/asset-category",
       }
     ],
   },
