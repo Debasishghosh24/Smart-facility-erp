@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 import AssetCategoryForm from "../components/AssetCategoryForm";
-import { mockAssetCategories } from "../mock/assetCategory.mock";
+import { useAssetCategories } from "../context/assetCategoryContext";
 
 import type { AssetCategoryFormData } from "../validation/assetCategory.schema";
 
@@ -11,26 +11,27 @@ export default function AssetCategoryEdit() {
     const { id } = useParams();
 
     const navigate = useNavigate();
+    const { assetCategories, updateAssetCategory } = useAssetCategories();
 
     const category = useMemo(
         () =>
-            mockAssetCategories.find(
+            assetCategories.find(
                 (item) => item.id === id
             ),
-        [id]
+        [id, assetCategories]
     );
 
     const handleSubmit = (data: AssetCategoryFormData) => {
-        console.log("Updated Asset Category:", data);
-
-        // TODO:
-        // API update mutation will be added here later
-
-        toast.success(
-            "Asset category updated successfully."
-        );
-
-        navigate("/asset-category");
+        if (id) {
+            updateAssetCategory(id, {
+                ...data,
+                status: data.status ? "Active" : "Inactive"
+            });
+            toast.success(
+                "Asset category updated successfully."
+            );
+            navigate("/asset-category");
+        }
     };
 
     // Category not found

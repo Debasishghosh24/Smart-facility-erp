@@ -1,13 +1,14 @@
 import { DataTable } from "@/shared/components/dataTable/DataTable";
 
 import { columns } from "../constants/site.columns";
-import { mockSites } from "../mock/site.mock";
+import { useSites } from "../context/siteContext";
 
 export function SiteTable() {
+    const { sites } = useSites();
     return (
         <DataTable
             columns={columns}
-            data={mockSites}
+            data={sites}
         />
     );
 }

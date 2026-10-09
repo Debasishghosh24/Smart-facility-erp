@@ -3,12 +3,13 @@ import { Plus, Building2, CheckCircle2, AlertTriangle, Users } from "lucide-reac
 
 import { Button } from "@/component/ui/button";
 import DepartmentTable from "../components/DepartmentTable";
-import { departmentMock } from "../mock/department.mock";
+import { useDepartments } from "../context/departmentContext";
 
 export default function DepartmentList() {
-    const totalDepartments = departmentMock.length;
-    const activeDepartments = departmentMock.filter(d => d.status === "Active").length;
-    const inactiveDepartments = departmentMock.filter(d => d.status === "Inactive").length;
+    const { departments } = useDepartments();
+    const totalDepartments = departments.length;
+    const activeDepartments = departments.filter(d => d.status === "Active").length;
+    const inactiveDepartments = departments.filter(d => d.status === "Inactive").length;
     const totalEmployees = 423; // Mock value matching mockup design
 
     return (

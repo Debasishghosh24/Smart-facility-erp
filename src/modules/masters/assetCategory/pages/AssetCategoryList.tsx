@@ -11,28 +11,29 @@ import { Button } from "@/component/ui/button";
 import { Card, CardContent } from "@/component/ui/card";
 
 import AssetCategoryTable from "../components/AssetCategoryTable";
-import { mockAssetCategories } from "../mock/assetCategory.mock";
+import { useAssetCategories } from "../context/assetCategoryContext";
 
 export default function AssetCategoryList() {
     const navigate = useNavigate();
+    const { assetCategories } = useAssetCategories();
 
-    const totalCategories = mockAssetCategories.length;
+    const totalCategories = assetCategories.length;
 
-    const activeCategories = mockAssetCategories.filter(
+    const activeCategories = assetCategories.filter(
         (category) => category.status === "Active"
     ).length;
 
-    const inactiveCategories = mockAssetCategories.filter(
+    const inactiveCategories = assetCategories.filter(
         (category) => category.status === "Inactive"
     ).length;
 
     const totalAssetTypes = useMemo(() => {
         return new Set(
-            mockAssetCategories.map(
+            assetCategories.map(
                 (category) => category.assetType
             )
         ).size;
-    }, []);
+    }, [assetCategories]);
 
     return (
         <div className="space-y-6">

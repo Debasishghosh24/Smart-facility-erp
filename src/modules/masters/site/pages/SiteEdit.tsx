@@ -5,22 +5,25 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/component/ui/button";
 
 import { SiteForm } from "../components/SiteForm";
-import { mockSites } from "../mock/site.mock";
+import { useSites } from "../context/siteContext";
 import type { SiteFormData } from "../validation/site.schema";
 
 export default function SiteEdit() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { sites, updateSite } = useSites();
 
     const site = useMemo(
-        () => mockSites.find((item) => item.id === id),
-        [id]
+        () => sites.find((item) => item.id === id),
+        [id, sites]
     );
 
     const handleSubmit = (data: SiteFormData) => {
-        console.log("Updated Site:", data);
-        toast.success("Site updated successfully.");
-        navigate("/site");
+        if (id) {
+            updateSite(id, data);
+            toast.success("Site updated successfully.");
+            navigate("/site");
+        }
     };
 
     if (!site) {

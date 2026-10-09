@@ -67,7 +67,7 @@ export default function SidebarItem({ item }: Props) {
 
   // Check if any child is active to keep parent open
   const hasActiveChild = item.children && item.children.some(
-    child => child.path && location.pathname.startsWith(child.path)
+    child => child.path && (location.pathname === child.path || (child.path !== "/" && location.pathname.startsWith(child.path + "/")))
   );
 
   const [isOpen, setIsOpen] = useState(!!hasActiveChild);
@@ -147,7 +147,7 @@ export default function SidebarItem({ item }: Props) {
           <div className="ml-2 pl-3 pr-1 py-2.5 rounded-[20px] border border-white/[0.05] bg-white/[0.01] backdrop-blur-md shadow-inner space-y-1 transition-all duration-300">
             {item.children?.map((child) => {
               const ChildIcon = getLucideIcon(child.id);
-              const isChildActive = location.pathname.startsWith(child.path ?? "");
+              const isChildActive = child.path ? (location.pathname === child.path || (child.path !== "/" && location.pathname.startsWith(child.path + "/"))) : false;
               return (
                 <NavLink
                   key={child.id}

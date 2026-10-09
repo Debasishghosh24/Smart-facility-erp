@@ -4,7 +4,7 @@ import { toast } from "sonner";
 
 import EmployeeForm from "../components/EmployeeForm";
 
-import { mockEmployees } from "../mock/employee.mock";
+import { useEmployees } from "../context/employeeContext";
 
 import type { EmployeeFormData } from "../validation/employee.schema";
 
@@ -12,18 +12,22 @@ export default function EmployeeEdit() {
     const { id } = useParams();
 
     const navigate = useNavigate();
+    const { employees, updateEmployee } = useEmployees();
 
     const employee = useMemo(
-        () => mockEmployees.find((item) => item.id === id),
-        [id]
+        () => employees.find((item) => item.id === id),
+        [id, employees]
     );
 
     const handleSubmit = (data: EmployeeFormData) => {
-        console.log("Updated Employee:", data);
-
-        toast.success("Employee updated successfully.");
-
-        navigate("/employee");
+        if (id) {
+            updateEmployee(id, {
+                ...data,
+                status: data.status ? "Active" : "Inactive"
+            });
+            toast.success("Employee updated successfully.");
+            navigate("/employee");
+        }
     };
 
     if (!employee) {

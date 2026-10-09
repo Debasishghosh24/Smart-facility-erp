@@ -2,18 +2,20 @@ import { useMemo } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/component/ui/button";
+import { toast } from "sonner";
 
 import DepartmentForm from "../components/DepartmentForm";
-import { departmentMock } from "../mock/department.mock";
+import { useDepartments } from "../context/departmentContext";
 import type { DepartmentFormData } from "../validation/department.schema";
 
 export default function DepartmentEdit() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
+    const { departments, updateDepartment } = useDepartments();
 
     const existingData = useMemo(() => {
-        return departmentMock.find((item) => item.id === id);
-    }, [id]);
+        return departments.find((item) => item.id === id);
+    }, [id, departments]);
 
     const defaultValues: Partial<DepartmentFormData> = useMemo(() => {
         return existingData
@@ -27,8 +29,16 @@ export default function DepartmentEdit() {
     }, [existingData]);
 
     const handleSubmit = (data: DepartmentFormData) => {
-        console.log("Updating Department data for id:", id, data);
-        navigate("/department");
+        if (id) {
+            updateDepartment(id, {
+                name: data.name,
+                shortCode: data.shortCode,
+                description: data.description,
+                status: data.status ? "Active" : "Inactive",
+            });
+            toast.success("Department updated successfully");
+            navigate("/department");
+        }
     };
 
     if (!existingData) {

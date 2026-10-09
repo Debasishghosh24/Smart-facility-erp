@@ -3,15 +3,19 @@ import { toast } from "sonner";
 
 import VendorForm from "../components/VendorForm";
 import type { VendorFormData } from "../validation/vendor.schema";
+import { useVendors } from "../context/vendorContext";
 
 export default function VendorAdd() {
     const navigate = useNavigate();
+    const { addVendor } = useVendors();
 
     const handleSubmit = (data: VendorFormData) => {
-        console.log("New Vendor:", data);
-
-        // TODO:
-        // API call or mutation will be added here later
+        addVendor({
+            id: `VEN-${Date.now()}`,
+            ...data,
+            status: data.status ? "Active" : "Inactive",
+            createdAt: new Date().toISOString().split("T")[0]
+        });
 
         toast.success("Vendor created successfully.");
 

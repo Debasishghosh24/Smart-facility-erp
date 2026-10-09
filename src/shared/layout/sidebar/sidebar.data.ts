@@ -53,6 +53,13 @@ export const sidebarItems: SidebarItem[] = [
         title: "Asset Category",
         icon: IconBuildingWarehouse,
         path: "/asset-category",
+      },
+
+      {
+        id: "asset",
+        title: "Asset",
+        icon: IconBuildingWarehouse,
+        path: "/asset",
       }
     ],
   },
@@ -61,14 +68,41 @@ export const sidebarItems: SidebarItem[] = [
     id: "assignment",
     title: "Assignment",
     icon: IconClipboardList,
-    path: "/assignment",
+    children: [
+      {
+        id: "asset-assignment",
+        title: "Asset Assignment",
+        icon: IconClipboardList,
+        path: "/transactions/asset-assignment",
+      },
+      {
+        id: "asset-return",
+        title: "Asset Return",
+        icon: IconClipboardList,
+        path: "/transactions/asset-return",
+      },
+      {
+        id: "asset-transfer",
+        title: "Asset Transfer",
+        icon: IconClipboardList,
+        path: "/transactions/asset-transfer",
+      }
+
+    ]
   },
 
   {
     id: "maintenance",
     title: "Maintenance",
     icon: IconTool,
-    path: "/maintenance",
+    children: [
+      {
+        id: "work-order",
+        title: "Work Order",
+        icon: IconClipboardList,
+        path: "/maintenance/work-order",
+      }
+    ]
   },
 
   {

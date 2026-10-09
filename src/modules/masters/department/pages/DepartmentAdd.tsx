@@ -1,15 +1,26 @@
 import { useNavigate, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/component/ui/button";
+import { toast } from "sonner";
 
 import DepartmentForm from "../components/DepartmentForm";
 import type { DepartmentFormData } from "../validation/department.schema";
+import { useDepartments } from "../context/departmentContext";
 
 export default function DepartmentAdd() {
     const navigate = useNavigate();
+    const { addDepartment } = useDepartments();
 
     const handleSubmit = (data: DepartmentFormData) => {
-        console.log("Submitting new Department:", data);
+        addDepartment({
+            id: `DPT-${Date.now()}`,
+            name: data.name,
+            shortCode: data.shortCode,
+            description: data.description,
+            status: data.status ? "Active" : "Inactive",
+            createdAt: new Date().toISOString().split("T")[0]
+        });
+        toast.success("Department added successfully");
         navigate("/department");
     };
 

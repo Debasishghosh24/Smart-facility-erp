@@ -8,20 +8,21 @@ import {
 } from "@/component/ui/card";
 
 import EmployeeTable from "../components/EmployeeTable";
-import { mockEmployees } from "../mock/employee.mock";
+import { useEmployees } from "../context/employeeContext";
 
 export default function EmployeeList() {
-    const totalEmployees = mockEmployees.length;
+    const { employees } = useEmployees();
+    const totalEmployees = employees.length;
 
-    const activeEmployees = mockEmployees.filter(
+    const activeEmployees = employees.filter(
         (employee) => employee.status === "Active"
     ).length;
 
-    const permanentEmployees = mockEmployees.filter(
+    const permanentEmployees = employees.filter(
         (employee) => employee.employmentType === "Permanent"
     ).length;
 
-    const interns = mockEmployees.filter(
+    const interns = employees.filter(
         (employee) => employee.employmentType === "Intern"
     ).length;
 

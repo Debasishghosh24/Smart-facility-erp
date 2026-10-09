@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 import VendorForm from "../components/VendorForm";
-import { mockVendors } from "../mock/vendor.mock";
+import { useVendors } from "../context/vendorContext";
 
 import type { VendorFormData } from "../validation/vendor.schema";
 
@@ -11,21 +11,22 @@ export default function VendorEdit() {
     const { id } = useParams();
 
     const navigate = useNavigate();
+    const { vendors, updateVendor } = useVendors();
 
     const vendor = useMemo(
-        () => mockVendors.find((item) => item.id === id),
-        [id]
+        () => vendors.find((item) => item.id === id),
+        [id, vendors]
     );
 
     const handleSubmit = (data: VendorFormData) => {
-        console.log("Updated Vendor:", data);
-
-        // TODO:
-        // Update API Call
-
-        toast.success("Vendor updated successfully.");
-
-        navigate("/vendor");
+        if (id) {
+            updateVendor(id, {
+                ...data,
+                status: data.status ? "Active" : "Inactive"
+            });
+            toast.success("Vendor updated successfully.");
+            navigate("/vendor");
+        }
     };
 
     if (!vendor) {

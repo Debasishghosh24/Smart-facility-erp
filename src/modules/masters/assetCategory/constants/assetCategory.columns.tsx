@@ -5,6 +5,7 @@ import {
     Pencil,
     Trash2,
 } from "lucide-react";
+import { toast } from "sonner";
 
 import { Badge } from "@/component/ui/badge";
 import { Button } from "@/component/ui/button";
@@ -12,6 +13,7 @@ import { Button } from "@/component/ui/button";
 import { DataTableColumnHeader } from "@/shared/components/dataTable/DataTableColumnHeader";
 
 import type { AssetCategory } from "../types/assetCategory.types";
+import { useAssetCategories } from "../context/assetCategoryContext";
 
 export const columns: ColumnDef<AssetCategory>[] = [
     // Category
@@ -169,40 +171,42 @@ export const columns: ColumnDef<AssetCategory>[] = [
         enableSorting: false,
         enableHiding: false,
 
-        cell: ({ row }) => {
-            const category = row.original;
-
-            return (
-                <div className="flex items-center gap-2">
-                    {/* Edit */}
-                    <Link to={`/asset-category/edit/${category.id}`}>
-                        <Button
-                            type="button"
-                            size="icon"
-                            variant="outline"
-                            className="h-8 w-8"
-                        >
-                            <Pencil className="h-4 w-4" />
-                        </Button>
-                    </Link>
-
-                    {/* Delete */}
-                    <Button
-                        type="button"
-                        size="icon"
-                        variant="outline"
-                        className="h-8 w-8 text-red-500 hover:bg-red-50 hover:text-red-600"
-                        onClick={() =>
-                            console.log(
-                                "Delete Asset Category:",
-                                category.id
-                            )
-                        }
-                    >
-                        <Trash2 className="h-4 w-4" />
-                    </Button>
-                </div>
-            );
-        },
+        cell: ({ row }) => <ActionsCell id={row.original.id} />,
     },
 ];
+
+const ActionsCell = ({ id }: { id: string }) => {
+    const { deleteAssetCategory } = useAssetCategories();
+
+    const handleDelete = () => {
+        deleteAssetCategory(id);
+        toast.success("Asset category deleted successfully");
+    };
+
+    return (
+        <div className="flex items-center gap-2">
+            {/* Edit */}
+            <Link to={`/asset-category/edit/${id}`}>
+                <Button
+                    type="button"
+                    size="icon"
+                    variant="outline"
+                    className="h-8 w-8"
+                >
+                    <Pencil className="h-4 w-4" />
+                </Button>
+            </Link>
+
+            {/* Delete */}
+            <Button
+                type="button"
+                size="icon"
+                variant="outline"
+                className="h-8 w-8 text-red-500 hover:bg-red-50 hover:text-red-600"
+                onClick={handleDelete}
+            >
+                <Trash2 className="h-4 w-4" />
+            </Button>
+        </div>
+    );
+};

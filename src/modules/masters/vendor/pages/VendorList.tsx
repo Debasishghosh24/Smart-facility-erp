@@ -12,24 +12,25 @@ import { Button } from "@/component/ui/button";
 import { Card, CardContent } from "@/component/ui/card";
 
 import VendorTable from "../components/VendorTable";
-import { mockVendors } from "../mock/vendor.mock";
+import { useVendors } from "../context/vendorContext";
 
 export default function VendorList() {
     const navigate = useNavigate();
+    const { vendors } = useVendors();
 
-    const totalVendors = mockVendors.length;
+    const totalVendors = vendors.length;
 
-    const activeVendors = mockVendors.filter(
+    const activeVendors = vendors.filter(
         (vendor) => vendor.status === "Active"
     ).length;
 
-    const inactiveVendors = mockVendors.filter(
+    const inactiveVendors = vendors.filter(
         (vendor) => vendor.status === "Inactive"
     ).length;
 
     const totalStates = useMemo(() => {
-        return new Set(mockVendors.map((vendor) => vendor.state)).size;
-    }, []);
+        return new Set(vendors.map((vendor) => vendor.state)).size;
+    }, [vendors]);
 
     return (
         <div className="space-y-6">

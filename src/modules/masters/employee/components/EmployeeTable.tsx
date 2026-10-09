@@ -1,13 +1,14 @@
 import { DataTable } from "@/shared/components/dataTable/DataTable";
 
 import { columns } from "../constants/employee.columns";
-import { mockEmployees } from "../mock/employee.mock";
+import { useEmployees } from "../context/employeeContext";
 
 export default function EmployeeTable() {
+    const { employees } = useEmployees();
     return (
         <DataTable
             columns={columns}
-            data={mockEmployees}
+            data={employees}
         />
     );
 }

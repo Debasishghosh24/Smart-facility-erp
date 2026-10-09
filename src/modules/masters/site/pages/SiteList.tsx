@@ -3,13 +3,14 @@ import { Plus, MapPin, CheckCircle2, AlertTriangle, Users } from "lucide-react";
 
 import { Button } from "@/component/ui/button";
 import { SiteTable } from "../components/SiteTable";
-import { mockSites } from "../mock/site.mock";
+import { useSites } from "../context/siteContext";
 import { mockEmployees } from "../../employee/mock/employee.mock";
 
 export default function SiteList() {
-    const totalSites = mockSites.length;
-    const activeSites = mockSites.filter(s => s.status === "Active").length;
-    const inactiveSites = mockSites.filter(s => s.status === "Inactive").length;
+    const { sites } = useSites();
+    const totalSites = sites.length;
+    const activeSites = sites.filter(s => s.status === "Active").length;
+    const inactiveSites = sites.filter(s => s.status === "Inactive").length;
     const totalEmployees = mockEmployees.length;
 
     return (

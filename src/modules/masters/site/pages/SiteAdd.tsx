@@ -5,12 +5,18 @@ import { Button } from "@/component/ui/button";
 
 import { SiteForm } from "../components/SiteForm";
 import type { SiteFormData } from "../validation/site.schema";
+import { useSites } from "../context/siteContext";
 
 export default function SiteAdd() {
     const navigate = useNavigate();
+    const { addSite } = useSites();
 
     const handleSubmit = (data: SiteFormData) => {
-        console.log("Site Data :", data);
+        addSite({
+            id: `SIT-${Date.now()}`,
+            ...data,
+            createdAt: new Date().toISOString().split("T")[0]
+        });
         toast.success("Site created successfully.");
         navigate("/site");
     };

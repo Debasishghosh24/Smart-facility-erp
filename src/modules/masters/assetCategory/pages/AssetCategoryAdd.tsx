@@ -4,15 +4,19 @@ import { toast } from "sonner";
 import AssetCategoryForm from "../components/AssetCategoryForm";
 
 import type { AssetCategoryFormData } from "../validation/assetCategory.schema";
+import { useAssetCategories } from "../context/assetCategoryContext";
 
 export default function AssetCategoryAdd() {
     const navigate = useNavigate();
+    const { addAssetCategory } = useAssetCategories();
 
     const handleSubmit = (data: AssetCategoryFormData) => {
-        console.log("New Asset Category:", data);
-
-        // TODO:
-        // API mutation will be added here later
+        addAssetCategory({
+            id: `CAT-${Date.now()}`,
+            ...data,
+            status: data.status ? "Active" : "Inactive",
+            createdAt: new Date().toISOString().split("T")[0]
+        });
 
         toast.success("Asset category created successfully.");
 

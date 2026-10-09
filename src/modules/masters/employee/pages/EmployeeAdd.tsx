@@ -3,12 +3,19 @@ import { toast } from "sonner";
 
 import EmployeeForm from "../components/EmployeeForm";
 import type { EmployeeFormData } from "../validation/employee.schema";
+import { useEmployees } from "../context/employeeContext";
 
 export default function EmployeeAdd() {
     const navigate = useNavigate();
+    const { addEmployee } = useEmployees();
 
     const handleSubmit = (data: EmployeeFormData) => {
-        console.log("Employee Data:", data);
+        addEmployee({
+            id: `EMP-${Date.now()}`,
+            ...data,
+            status: data.status ? "Active" : "Inactive",
+            createdAt: new Date().toISOString().split("T")[0]
+        });
 
         toast.success("Employee created successfully.");
 

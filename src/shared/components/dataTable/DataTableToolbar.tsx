@@ -19,7 +19,7 @@ interface DataTableToolbarProps<TData> {
 export function DataTableToolbar<TData>({
     table,
 }: DataTableToolbarProps<TData>) {
-    const searchColumn = table.getColumn("siteName") ?? table.getColumn("name") ?? table.getColumn("vendorName") ?? table.getColumn("categoryName") ?? table.getColumn("employeeId");
+    const searchColumn = table.getColumn("siteName") ?? table.getColumn("name") ?? table.getColumn("vendorName") ?? table.getColumn("categoryName") ?? table.getColumn("employeeId") ?? table.getColumn("assetName") ?? table.getColumn("employeeName") ?? table.getColumn("assignmentId");
     const searchPlaceholder = table.getColumn("siteName")
         ? "Search site by name..."
         : table.getColumn("name")
@@ -29,7 +29,13 @@ export function DataTableToolbar<TData>({
         : table.getColumn("categoryName")
         ? "Search category by name..."
         : table.getColumn("employeeId")
-        ? "Search employee..."
+        ? "Search employee by ID..."
+        : table.getColumn("assetName")
+        ? "Search asset by name..."
+        : table.getColumn("employeeName")
+        ? "Search employee by name..."
+        : table.getColumn("assignmentId")
+        ? "Search assignment ID..."
         : "Search...";
 
     return (

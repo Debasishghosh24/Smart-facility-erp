@@ -15,8 +15,10 @@ import {
 import { Link } from "react-router-dom";
 import { DataTableColumnHeader } from "@/shared/components/dataTable/DataTableColumnHeader";
 import { Button } from "@/component/ui/button";
+import { toast } from "sonner";
 
 import type { Department } from "../types/department.types";
+import { useDepartments } from "../context/departmentContext";
 
 function getDepartmentIcon(name: string) {
   const n = name.toLowerCase();
@@ -138,28 +140,37 @@ export const columns: ColumnDef<Department>[] = [
   {
     id: "actions",
     header: "Actions",
-    cell: ({ row }) => {
-      const id = row.original.id;
-      return (
-        <div className="flex gap-2">
-          <Link to={`/department/edit/${id}`}>
-            <Button 
-              variant="outline" 
-              size="icon"
-              className="h-8 w-8 border-blue-200 text-blue-600 hover:bg-blue-50 hover:text-blue-700 bg-white"
-            >
-              <Pencil className="h-3.5 w-3.5" />
-            </Button>
-          </Link>
-          <Button 
-            variant="outline" 
-            size="icon"
-            className="h-8 w-8 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 bg-white"
-          >
-            <Trash2 className="h-3.5 w-3.5" />
-          </Button>
-        </div>
-      );
-    },
+    cell: ({ row }) => <ActionsCell id={row.original.id} />
   },
 ];
+
+const ActionsCell = ({ id }: { id: string }) => {
+  const { deleteDepartment } = useDepartments();
+
+  const handleDelete = () => {
+    deleteDepartment(id);
+    toast.success("Department deleted successfully");
+  };
+
+  return (
+    <div className="flex gap-2">
+      <Link to={`/department/edit/${id}`}>
+        <Button 
+          variant="outline" 
+          size="icon"
+          className="h-8 w-8 border-blue-200 text-blue-600 hover:bg-blue-50 hover:text-blue-700 bg-white"
+        >
+          <Pencil className="h-3.5 w-3.5" />
+        </Button>
+      </Link>
+      <Button 
+        variant="outline" 
+        size="icon"
+        className="h-8 w-8 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 bg-white"
+        onClick={handleDelete}
+      >
+        <Trash2 className="h-3.5 w-3.5" />
+      </Button>
+    </div>
+  );
+};

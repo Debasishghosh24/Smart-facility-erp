@@ -20,6 +20,24 @@ import VendorEdit from "@/modules/masters/vendor/pages/VendorEdit"
 import AssetCategoryList from "@/modules/masters/assetCategory/pages/AssetCategoryList"
 import AssetCategoryAdd from "@/modules/masters/assetCategory/pages/AssetCategoryAdd"
 import AssetCategoryEdit from "@/modules/masters/assetCategory/pages/AssetCategoryEdit"
+import AssetEdit from "@/modules/masters/asset/pages/AssetEdit"
+import AssetAdd from "@/modules/masters/asset/pages/AssetAdd"
+import AssetList from "@/modules/masters/asset/pages/AssetList"
+import AssetAssignmentList from "@/modules/assignment/assetAssignment/pages/AssetAssignmentList"
+import AssetAssignmentAdd from "@/modules/assignment/assetAssignment/pages/AssetAssignmentAdd"
+import AssetAssignmentEdit from "@/modules/assignment/assetAssignment/pages/AssetAssignmentEdit"
+import AssetReturnList from "@/modules/assignment/assetReturn/pages/assetReturnList"
+import AssetReturnAdd from "@/modules/assignment/assetReturn/pages/assetReturnAdd"
+import AssetReturnEdit from "@/modules/assignment/assetReturn/pages/assetReturnEdit"
+import AssetTransferList from "@/modules/assignment/assetTransfer/pages/assetTransferList"
+import AssetTransferAdd from "@/modules/assignment/assetTransfer/pages/assetTransferAdd"
+import AssetTransferEdit from "@/modules/assignment/assetTransfer/pages/assetTransferEdit"
+import AssetDetails from "@/modules/masters/asset/pages/AssetDetails";
+import WorkOrderEdit from "@/modules/maintenance/workOrder/pages/workOrderEdit"
+import WorkOrderAdd from "@/modules/maintenance/workOrder/pages/workOrderAdd"
+import WorkOrderList from "@/modules/maintenance/workOrder/pages/workOrderList"
+import WorkOrderDetails from "@/modules/maintenance/workOrder/pages/workOrderDetails"
+
 
 export default function AppRoutes() {
   return (
@@ -103,6 +121,80 @@ export default function AppRoutes() {
             path="/asset-category/edit/:id"
             element={<AssetCategoryEdit />}
           />
+          <Route
+            path="/masters/asset/:id"
+            element={<AssetDetails />}
+          />
+
+          <Route
+            path="/asset"
+            element={<AssetList />}
+          />
+
+          <Route
+            path="/asset/add"
+            element={<AssetAdd />}
+          />
+          <Route
+            path="/asset/edit/:id"
+            element={<AssetEdit />}
+          />
+          <Route
+            path="/transactions/asset-assignment"
+            element={<AssetAssignmentList />}
+          />
+          <Route
+            path="/transactions/asset-assignment/add"
+            element={<AssetAssignmentAdd />}
+          />
+          <Route
+            path="/transactions/asset-assignment/edit/:id"
+            element={<AssetAssignmentEdit />}
+          />
+          <Route
+            path="/transactions/asset-return"
+            element={<AssetReturnList />}
+          />
+          <Route
+            path="/transactions/asset-return/add"
+            element={<AssetReturnAdd />}
+          />
+          <Route
+            path="/transactions/asset-return/edit/:id"
+            element={<AssetReturnEdit />}
+          />
+          <Route
+            path="/transactions/asset-transfer"
+            element={<AssetTransferList />}
+          />
+
+          <Route
+            path="/transactions/asset-transfer/add"
+            element={<AssetTransferAdd />}
+          />
+
+          <Route
+            path="/transactions/asset-transfer/edit/:id"
+            element={<AssetTransferEdit />}
+          />
+          <Route
+            path="/maintenance/work-order/edit/:id"
+            element={<WorkOrderEdit />}
+          />
+          <Route
+            path="/maintenance/work-order/add"
+            element={<WorkOrderAdd />}
+          />
+          <Route
+            path="/maintenance/work-order"
+            element={<WorkOrderList />}
+          />
+          <Route
+            path="/maintenance/work-order/:id"
+            element={<WorkOrderDetails />}
+          />
+
+
         </Route>
 
 
